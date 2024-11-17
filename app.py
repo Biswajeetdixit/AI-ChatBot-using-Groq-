@@ -8,8 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Lang_Chain Tracking
-os.environ['LANGCHAIN_API_KEY'] = os.getenv('Lang_Api_key')  # Corrected the typo
-os.environ['LANGCHAIN_TRACKING_V2'] = "true"
+
 os.environ["LANGCHAIN_PROJECT"] = "Simple Q&A Chatbot with Groq"
 
 # Prompt template
