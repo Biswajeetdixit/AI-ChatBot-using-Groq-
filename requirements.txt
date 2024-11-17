@@ -1,5 +1,6 @@
 # Essential packages for your project
 streamlit==1.40.1
+langchain_groq
 numpy==1.26  # Version below 2.0 for compatibility
 pillow==10.3.0  # Compatible version to avoid conflicts with gradio and mistral-common
 tenacity<9.0.0,>=8.1.0  # Specific version range for compatibility with langchain
