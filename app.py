@@ -3,57 +3,61 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 import os
-from dotenv import load_dotenv
 
+
+import os
+from dotenv import load_dotenv
 load_dotenv()
 
-# Lang_Chain Tracking
-os.environ['LANGCHAIN_API_KEY'] = os.getenv('Lang_Api_key')
 
-os.environ["LANGCHAIN_PROJECT"] = "Simple Q&A Chatbot with Groq"
+## Lang_Chain Tracking
+os.environ['LANHCHAIN_API_KEY']=os.getenv('Lang_Api_key')
+os.environ['LANGCHAIN_TRACKING_V2']="true"
+os.environ["LANGCHAIN_PROJECT"]="Simple Q&A Chatbot with Groq"
 
-# Prompt template
-prompt = ChatPromptTemplate.from_messages(
+
+#prompt template
+prompt=ChatPromptTemplate.from_messages(
     [
-        ("system", "You are a helpful assistant and AI expert. Your name is Friday. Biswajeet Dixit created you."),
-        ('user', "Question: {question}")
+        ("system","You are a heplfull assistant and you are a AI expert your name is friday . Biswajeet dixit created you"),
+        ('user',"Question:{question}")
     ]
 )
 
-# Generate response function with error handling for unsupported models
-def generate_response(question, model_name, api_key, temperature, max_tokens):
-    try:
-        llm = ChatGroq(model_name=model_name, api_key=api_key)
-        output_parser = StrOutputParser()
-        chain = prompt | llm | output_parser
-        answer = chain.invoke({'question': question})
-        return answer
-    except Exception as e:
-        return f"Error: {str(e)}"
 
-# Title of the app
+def generate_response(question,llm,temprature,max_tokens):
+    llm=ChatGroq(model_name='llama-3.1-8b-instant',api_key=api_key)
+    output_parser=StrOutputParser()
+    chain=prompt|llm|output_parser
+    answar=chain.invoke({'question':question})
+    return answar
+
+### Titel_of the app
 st.title("AI ChatBot using Groq")
 
-# Sidebar for selecting compatible models only
-compatible_models = ['llama-3.1-8b-instant', 'gemma2-9b-IT', "mixtral-8*7b-32768"]
-model_name = st.sidebar.selectbox("Select Open Source model", compatible_models)
 
-# Input for the Groq API Key
-api_key = st.text_input("Enter your Groq API key:", type="password")
 
-# Adjust response parameters
-temperature = st.sidebar.slider("Temperature", min_value=0.0, max_value=1.0, value=0.7)
+## Select the OpenAI model
+llm=st.sidebar.selectbox("Select Open Source model",['llama-3.1-8b-instant','gemma2-9b-IT',"mixtral-8*7b-32768","whisper-large-v3"])
+
+## Input the Groq API Key
+api_key=st.text_input("Enter your Groq API key:",type="password")
+
+## Adjust response parameter
+temperature=st.sidebar.slider("Temperature",min_value=0.0,max_value=1.0,value=0.7)
 max_tokens = st.sidebar.slider("Max Tokens", min_value=50, max_value=300, value=150)
 
-# Main interface for user input
-st.write("Go ahead, ask any question.")
-user_input = st.text_input("You:")
+       
+##Main interface for user input 
+st.write("Go ahead ask any question ")
+user_input=st.text_input("You:")
 
-if user_input and api_key:
-    response = generate_response(user_input, model_name, api_key, temperature, max_tokens)
-    st.write(response)
-elif not api_key:
-    st.write("Please enter your Groq API key.")
+
+if user_input:
+    respose=generate_response(user_input,api_key,temperature,max_tokens,)
+    st.write(respose)
+
 else:
-    st.write("Please provide an input question.")
+    st.write("plese provide the input")
+
 
