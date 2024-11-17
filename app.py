@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Lang_Chain Tracking
-
+os.environ['LANGCHAIN_API_KEY'] = os.getenv('Lang_Api_key')
+os.environ['LANGCHAIN_TRACKING_V2'] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "Simple Q&A Chatbot with Groq"
 
 # Prompt template
@@ -19,20 +20,23 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Generate response function
+# Generate response function with error handling for unsupported models
 def generate_response(question, model_name, api_key, temperature, max_tokens):
-    llm = ChatGroq(model_name=model_name, api_key=api_key)
-    output_parser = StrOutputParser()
-    chain = prompt | llm | output_parser
-    answer = chain.invoke({'question': question})
-    return answer
+    try:
+        llm = ChatGroq(model_name=model_name, api_key=api_key)
+        output_parser = StrOutputParser()
+        chain = prompt | llm | output_parser
+        answer = chain.invoke({'question': question})
+        return answer
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 # Title of the app
 st.title("AI ChatBot using Groq")
 
-# Select the model and parameters from the sidebar
-model_name = st.sidebar.selectbox("Select Open Source model", 
-                                  ['llama-3.1-8b-instant', 'gemma2-9b-IT', "mixtral-8*7b-32768", "whisper-large-v3"])
+# Sidebar for selecting compatible models only
+compatible_models = ['llama-3.1-8b-instant', 'gemma2-9b-IT', "mixtral-8*7b-32768"]
+model_name = st.sidebar.selectbox("Select Open Source model", compatible_models)
 
 # Input for the Groq API Key
 api_key = st.text_input("Enter your Groq API key:", type="password")
@@ -52,3 +56,4 @@ elif not api_key:
     st.write("Please enter your Groq API key.")
 else:
     st.write("Please provide an input question.")
+
