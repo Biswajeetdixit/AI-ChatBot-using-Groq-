@@ -26,4 +26,10 @@ This project is an AI-powered chatbot application built with Groq's Large Langua
    ```bash
    git clone <repository-url>
 
+Navigate to the project directory:
 
+cd <repository-name>
+Install dependencies:
+
+pip install -r requirements.txt
+Create a .env file with your LANGCHAIN_API_KEY.
