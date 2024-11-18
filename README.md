@@ -48,6 +48,8 @@ Create a .env file with your LANGCHAIN_API_KEY.
 # Enter your 🔑 Groq API key when prompted.
 # Select an LLM model from the sidebar, and adjust Temperature and Max Tokens as desired.
 # Ask any question and let Friday provide AI-driven answers!
+![AI Model Diagram](https://github.com/Biswajeetdixit/AI-ChatBot-using-Groq-/blob/886a9658e9ef7c45f26332a558b8167753265705/Screen_short%26Video/Groq_llama%20.png)
+
 
 ## 💡 Detailed Features
 
