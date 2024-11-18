@@ -59,6 +59,9 @@ The sidebar provides a slider where users can select from various open-source mo
 - **gemma2-9b-IT**: Tailored for IT-related questions, providing detailed and accurate responses.
 - **mixtral-8*7b-32768**: Capable of handling complex queries across multiple domains.
 - **whisper-large-v3**: Effective for language translation and conversational responses.
+- 
+- ![AI Model Diagram](https://github.com/Biswajeetdixit/AI-ChatBot-using-Groq-/blob/5b0c9a7377de88690a1c6b82268fd7f91d9f871d/Screen_short%26Video/groq_slide.png)
+
 
 ### 🔥 Temperature Control
 Slider Range: 0.0 to 1.0.
