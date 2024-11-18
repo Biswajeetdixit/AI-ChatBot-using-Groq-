@@ -4,6 +4,9 @@
 
 This project is an AI-powered chatbot application built with Groq's Large Language Models (LLMs) and Streamlit. The chatbot, named **Friday**, is designed to answer questions with the expertise of an AI assistant. Created by **Biswajeet Dixit**, Friday is here to help you with questions on various topics, leveraging Groq's advanced LLMs for accurate and engaging responses.
 
+![Image Alt Text](interface_Groq.png)
+
+
 
 ---
 
