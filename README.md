@@ -28,7 +28,7 @@ This project is an AI-powered chatbot application built with Groq's Large Langua
 ### ⚙️ Installation
 1. Clone this repository:
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Biswajeetdixit/AI-ChatBot-using-Groq-/blob/main/README.md>
 
 Navigate to the project directory:
 
