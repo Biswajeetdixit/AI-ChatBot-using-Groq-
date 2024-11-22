@@ -2,20 +2,18 @@ import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.memory import ConversationBufferMemory
 import os
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
-os.environ['LANGCHAIN_API_KEY'] = os.getenv('Lang_Api_key')
-os.environ['LANGCHAIN_TRACKING_V2'] = "true"
+
 os.environ["LANGCHAIN_PROJECT"] = "Simple Q&A Chatbot with Groq"
 
-# Initialize memory for conversation
-if "memory" not in st.session_state:
-    st.session_state["memory"] = ConversationBufferMemory(input_key="question", output_key="answer")
+# Initialize conversation history in session state
+if "conversation_history" not in st.session_state:
+    st.session_state["conversation_history"] = []
 
 # Define the prompt template
 prompt = ChatPromptTemplate.from_messages(
@@ -25,16 +23,21 @@ prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Function to generate responses
-def generate_response(question, model_name, api_key, temperature, max_tokens, memory):
+# Function to generate responses and maintain memory
+def generate_response(question, model_name, api_key, temperature, max_tokens):
     # Initialize the Groq LLM
     llm = ChatGroq(model_name=model_name, api_key=api_key, temperature=temperature, max_tokens=max_tokens)
     
-    # Add memory
-    chain = memory | prompt | llm | StrOutputParser()
+    # Append conversation history to the prompt
+    conversation_context = "\n".join(st.session_state["conversation_history"])
+    full_prompt = f"{conversation_context}\nUser: {question}\nAI:"
     
-    # Generate the response
-    response = chain.invoke({"question": question})
+    # Generate response
+    response = llm.invoke(full_prompt)
+    
+    # Update conversation history
+    st.session_state["conversation_history"].append(f"User: {question}")
+    st.session_state["conversation_history"].append(f"AI: {response}")
     return response
 
 # Streamlit UI
@@ -54,14 +57,13 @@ st.write("Go ahead, ask any question:")
 user_input = st.text_input("You:")
 
 if user_input:
-    # Generate response and update memory
+    # Generate response
     response = generate_response(
         user_input,
         model_name=model_name,
         api_key=api_key,
         temperature=temperature,
-        max_tokens=max_tokens,
-        memory=st.session_state["memory"]
+        max_tokens=max_tokens
     )
     st.write(f"Friday: {response}")
 else:
@@ -70,10 +72,11 @@ else:
 # Display conversation history
 if st.checkbox("Show Conversation History"):
     st.write("### Conversation History:")
-    for message in st.session_state["memory"].chat_memory:
-        if message["type"] == "human":
-            st.write(f"**You:** {message['content']}")
-        elif message["type"] == "ai":
-            st.write(f"**Friday:** {message['content']}")
+    for i, message in enumerate(st.session_state["conversation_history"]):
+        if i % 2 == 0:  # User messages
+            st.write(f"**You:** {message}")
+        else:  # AI messages
+            st.write(f"**Friday:** {message}")
+
 
 
