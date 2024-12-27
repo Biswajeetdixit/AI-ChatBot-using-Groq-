@@ -75,7 +75,7 @@ st.title("AI ChatBot using Groq")
 
 ## Select the OpenAI model
 
-llm=st.sidebar.selectbox("Select Open Source model",['llama-3.1-8b-instant','gemma2-9b-IT',"mixtral-8*7b-32768","whisper-large-v3"])
+llm=st.sidebar.selectbox("Select Open Source model",['llama-3.3-70b-specdec','gemma2-9b-IT',"mixtral-8*7b-32768","whisper-large-v3"])
 
 
 
