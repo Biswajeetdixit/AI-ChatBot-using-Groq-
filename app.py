@@ -51,7 +51,7 @@ prompt=ChatPromptTemplate.from_messages(
 
 def generate_response(question,llm,temprature,max_tokens):
 
-    llm=ChatGroq(model_name='llama-3.1-8b-instant',api_key=api_key)
+    llm=ChatGroq(model_name='llama-3.3-70b-specdec',api_key=api_key)
 
     output_parser=StrOutputParser()
 
