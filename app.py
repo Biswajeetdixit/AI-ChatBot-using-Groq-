@@ -95,27 +95,16 @@ max_tokens = st.sidebar.slider("Max Tokens", min_value=50, max_value=300, value=
 
        
 
-##Main interface for user input 
-
-st.write("Go ahead ask any question ")
-
-user_input=st.text_input("You:" height=150)
-
-
-
-
+## Main interface for user input
+st.write("Go ahead, ask any question")
+user_input = st.text_area("You:", height=150)
 
 if user_input:
-
-    respose=generate_response(user_input,api_key,temperature,max_tokens,)
-
-    st.write(respose)
-
-
-
+    response = generate_response(user_input, api_key, temperature, max_tokens)
+    st.write(response)
 else:
+    st.write("Please provide the input")
 
-    st.write("plese provide the input")
 
 
 
