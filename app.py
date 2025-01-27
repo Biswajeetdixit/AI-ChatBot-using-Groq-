@@ -99,7 +99,7 @@ max_tokens = st.sidebar.slider("Max Tokens", min_value=50, max_value=300, value=
 
 st.write("Go ahead ask any question ")
 
-user_input=st.text_input("You:")
+user_input=st.text_input("You:" height=150)
 
 
 
